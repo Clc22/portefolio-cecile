@@ -1,0 +1,342 @@
+/* --- COPIEZ TOUT CECI DANS style.css --- */
+
+/* 1. IDENTITÉ VISUELLE */
+:root {
+    --bg-color: #f1e6d7;
+    --text-color: #373737;
+    --green-acid: #d0ce27;
+    --teal: #169087;
+    --lilac: #c8a6c5;
+    --red-accent: #e23f43;
+    --font-title: 'Oswald', sans-serif;
+    --font-body: 'Montserrat', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Pour que le footer/contenu prenne toute la hauteur */
+}
+
+/* 2. FORMES (BLOBS) */
+.shape-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+.blob { position: absolute; opacity: 0.9; }
+.blob-1 { top: -5%; left: -5%; width: 400px; fill: var(--teal); opacity: 0.8; transform: rotate(-10deg); }
+.blob-2 { top: 20%; right: -10%; width: 300px; fill: var(--green-acid); opacity: 0.9; transform: rotate(15deg); }
+.blob-3 { bottom: 5%; left: -5%; width: 350px; fill: var(--lilac); opacity: 0.8; transform: rotate(-20deg); }
+.blob-4 { bottom: 30%; right: 10%; width: 150px; fill: var(--red-accent); opacity: 0.8; transform: rotate(40deg); }
+.blob-5 { top: 40%; left: -8%; width: 250px; fill: var(--teal); opacity: 0.7; transform: rotate(25deg); }
+.blob-6 { bottom: 15%; right: -15%; width: 200px; fill: var(--green-acid); opacity: 0.8; transform: rotate(-30deg); }
+.blob-7 { top: -10%; left: 30%; width: 280px; fill: var(--lilac); opacity: 0.6; transform: rotate(5deg); }
+
+/* 3. NAVIGATION */
+nav {
+    padding: 2rem 5%;
+    text-align: center;
+    font-family: var(--font-title);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    z-index: 100;
+}
+nav ul { display: flex; justify-content: center; gap: 3rem; list-style: none; flex-wrap: wrap; }
+nav a { text-decoration: none; color: var(--text-color); font-size: 1.1rem; position: relative; }
+
+/* Effet de soulignement */
+nav a::after {
+    content: ''; display: block; width: 0; height: 2px; 
+    background: var(--text-color); transition: width 0.3s;
+}
+nav a:hover::after, nav a.current::after { width: 100%; }
+nav a.current { font-weight: 600; } /* Style pour la page active */
+
+/* 4. TYPOGRAPHIE GÉNÉRALE */
+h1 {
+    font-family: var(--font-title);
+    font-size: clamp(4rem, 10vw, 8rem);
+    text-transform: uppercase;
+    line-height: 0.9;
+    letter-spacing: -2px;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+h2 {
+    font-family: var(--font-title);
+    font-size: 3rem;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+    text-align: center;
+    position: relative;
+    display: inline-block;
+}
+h2::before {
+    content: ''; position: absolute;
+    bottom: 5px; left: -10px; right: -10px; height: 15px;
+    background-color: var(--green-acid);
+    z-index: -1;
+    transform: rotate(-1deg);
+    opacity: 0.6;
+}
+.subtitle {
+    font-family: var(--font-body);
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 4rem;
+    font-weight: 300;
+}
+
+/* 5. SECTIONS */
+section {
+    padding: 2rem 5% 4rem 5%; /* Ajusté pour le multi-page */
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* HERO (ACCUEIL) */
+.hero {
+    min-height: 70vh; /* Hauteur ajustée */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.date-pill {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    margin-top: 2rem;
+}
+
+/* GALERIE */
+.page-header { text-align: center; margin-bottom: 3rem; } /* Conteneur pour le titre de page */
+
+.categories {
+    display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 4rem; flex-wrap: wrap;
+}
+.cat-btn {
+    background: transparent; border: 2px solid var(--text-color); padding: 0.8rem 2rem;
+    font-family: var(--font-title); text-transform: uppercase; letter-spacing: 1px;
+    cursor: pointer; transition: 0.3s; font-size: 1rem; color: var(--text-color);
+}
+.cat-btn:hover, .cat-btn.active { background: var(--text-color); color: var(--bg-color); }
+
+.gallery { column-count: 3; column-gap: 2rem; }
+@media (max-width: 900px) { .gallery { column-count: 2; } }
+@media (max-width: 600px) { .gallery { column-count: 1; } }
+
+.artwork {
+    break-inside: avoid; margin-bottom: 2rem; position: relative;
+    background: white; padding: 15px; box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+}
+.artwork:hover { transform: scale(1.02); z-index: 10; cursor: pointer; }
+.artwork img { width: 100%; height: auto; display: block; }
+.artwork-info { padding-top: 15px; text-align: center; }
+.artwork-title { font-family: var(--font-title); font-size: 1.4rem; text-transform: uppercase; }
+.artwork-desc { font-size: 0.9rem; color: #666; font-style: italic; }
+
+/* CONTACT */
+.contact-wrapper {
+    display: flex; justify-content: center; align-items: center; min-height: 60vh;
+}
+.contact-box {
+    background: white; padding: 3rem; text-align: center;
+    border: 2px solid var(--text-color); max-width: 600px; width: 100%;
+    position: relative;
+}
+.contact-box::after {
+    content: ''; position: absolute; top: 20px; left: 20px; width: 100%; height: 100%;
+    border: 2px solid var(--text-color); z-index: -1; background: var(--green-acid);
+}
+.contact-item { margin: 1.5rem 0; font-size: 1.2rem; }
+.contact-item strong { font-family: var(--font-title); display: block; font-size: 1.5rem; margin-bottom: 0.2rem;}
+
+/* LIGHTBOX */
+.lightbox {
+    display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(241, 230, 215, 0.95); justify-content: center; align-items: center; flex-direction: column;
+}
+.lightbox img { max-height: 80vh; max-width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+.lightbox-close {
+    position: absolute; top: 30px; right: 30px; font-size: 3rem; cursor: pointer;
+    color: var(--text-color); font-family: var(--font-title);
+}
+
+/* --- AJOUTS POUR LE PDF --- */
+
+/* Bouton de téléchargement */
+.pdf-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    padding: 10px 25px;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 50px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.pdf-btn:hover {
+    background-color: var(--green-acid);
+    color: var(--text-color);
+    transform: translateY(-2px);
+}
+
+/* CACHER LE TEMPLATE PDF SUR L'ECRAN */
+#pdf-template-container {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    width: 794px; /* Largeur A4 en pixels (approx 96DPI) */
+    visibility: hidden; 
+}
+
+/* STYLE DU PDF GÉNÉRÉ */
+#pdf-content {
+    background-color: #f1e6d7; /* Fond beige */
+    font-family: 'Montserrat', sans-serif;
+    color: #373737;
+    width: 100%;
+}
+
+.pdf-page {
+    width: 100%;
+    min-height: 1123px; /* Hauteur A4 */
+    padding: 50px;
+    position: relative;
+    box-sizing: border-box;
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Pour couper les blobs qui dépassent */
+}
+
+.pdf-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 30px; /* Un peu plus gros */
+    background-color: var(--text-color); color: var(--bg-color);
+    border: none; border-radius: 50px;
+    font-family: var(--font-body); font-weight: 500; font-size: 1rem;
+    cursor: pointer; transition: 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.pdf-btn:hover {
+    background-color: var(--green-acid); color: var(--text-color);
+    transform: translateY(-2px);
+}
+
+/* CACHER LE TEMPLATE PDF SUR L'ECRAN */
+#pdf-template-container {
+    position: absolute; top: -9999px; left: -9999px;
+    width: 794px; /* Largeur A4 fixe */
+    visibility: hidden; 
+}
+
+/* STYLE DU PDF GÉNÉRÉ */
+#pdf-content {
+    background-color: #f1e6d7;
+    font-family: 'Montserrat', sans-serif;
+    color: #373737;
+    width: 100%;
+}
+
+.pdf-page {
+    width: 100%;
+    height: 1122px; /* Hauteur A4 exacte (96dpi) */
+    padding: 40px; /* Marges un peu réduites pour gagner de la place */
+    position: relative;
+    box-sizing: border-box;
+    page-break-after: always; /* Force nouvelle page après chaque bloc .pdf-page */
+    overflow: hidden;
+}
+
+/* Blobs Décoratifs */
+.pdf-blob { position: absolute; border-radius: 50%; filter: blur(40px); z-index: 0; }
+.blob-top-left { top: -80px; left: -80px; width: 300px; height: 300px; background: #169087; opacity: 0.5; }
+.blob-bottom-right { bottom: -80px; right: -80px; width: 300px; height: 300px; background: #d0ce27; opacity: 0.5; }
+.blob-center { top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 400px; background: #c8a6c5; opacity: 0.4; }
+.blob-footer { bottom: -50px; left: 0; width: 100%; height: 150px; background: #169087; opacity: 0.8; border-radius: 50% 50% 0 0; filter: blur(20px); }
+
+/* Couverture (Centrée verticalement) */
+.cover-page { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.cover-content { text-align: center; z-index: 10; }
+.cover-content h1 { font-family: 'Oswald', sans-serif; font-size: 5rem; line-height: 1; margin-bottom: 10px; letter-spacing: 5px; }
+.cover-content h2 { font-family: 'Oswald', sans-serif; font-size: 2rem; color: #e23f43; text-transform: uppercase; }
+.cover-date { background: #373737; color: #f1e6d7; display: inline-block; padding: 5px 20px; border-radius: 20px; margin-top: 30px; font-weight: bold; }
+
+/* Page Intro */
+.intro-page { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.intro-content { text-align: center; max-width: 85%; z-index: 10; background: rgba(255,255,255,0.6); padding: 40px; border: 2px solid #373737; }
+.intro-content h3 { font-family: 'Oswald', sans-serif; font-size: 2.5rem; text-transform: uppercase; margin-bottom: 20px; }
+.separator { width: 50px; height: 5px; background: #d0ce27; margin: 0 auto 30px auto; }
+.features-grid { display: flex; justify-content: space-around; margin-top: 30px; }
+.feature { display: flex; flex-direction: column; }
+.feature strong { font-family: 'Oswald', sans-serif; font-size: 1.1rem; }
+
+/* --- LA GRILLE DES OEUVRES (C'est ici que ça se joue) --- */
+#pdf-gallery-grid {
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 colonnes */
+    column-gap: 30px; /* Espace entre colonnes */
+    row-gap: 30px;    /* Espace entre lignes */
+    align-content: start; /* Colle les éléments en haut */
+}
+
+.pdf-artwork-item {
+    background: white;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    text-align: center;
+    
+    /* --- CRUCIAL POUR NE PAS COUPER --- */
+    break-inside: avoid;      /* Standard moderne */
+    page-break-inside: avoid; /* Pour html2pdf */
+    -webkit-column-break-inside: avoid;
+    
+    /* On s'assure que l'item ne soit pas trop haut pour en mettre 2 par colonne */
+    max-height: 450px; 
+}
+
+.pdf-artwork-item img {
+    width: 100%;
+    height: 240px; /* RÉDUIT (était 300px) pour permettre 4 items/page */
+    object-fit: cover; /* Coupe l'image proprement pour remplir le cadre */
+    margin-bottom: 10px;
+}
+
+.pdf-artwork-title {
+    font-family: 'Oswald', sans-serif; font-size: 1.1rem; 
+    text-transform: uppercase; color: #373737; margin-bottom: 3px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; /* Coupe si titre trop long */
+}
+.pdf-artwork-desc { font-size: 0.85rem; color: #666; font-style: italic; }
+
+/* Page Contact */
+.contact-page { display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #373737 !important; color: white; }
+.contact-page h3 { font-family: 'Oswald', sans-serif; font-size: 3.5rem; margin-bottom: 30px; color: #d0ce27; }
+.contact-page p { font-size: 1.3rem; margin: 8px 0; }
